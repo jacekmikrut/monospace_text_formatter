@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.author        = "Jacek Mikrut"
   s.email         = "jacekmikrut.software@gmail.com"
   s.homepage      = "http://github.com/jacekmikrut/monospace_text_formatter"
-  s.summary       = "Monospace text formatter."
-  s.description   = "Monospace text formatter."
+  s.summary       = "Formats monospaced text into a line or visual box."
+  s.description   = "Formats monospaced text into a line or visual box of defined 'width' and 'height' boundaries (expressed in number of characters)."
 
   s.files         = Dir["lib/**/*", "README*", "LICENSE*", "Changelog*"]
   s.require_path  = "lib"
