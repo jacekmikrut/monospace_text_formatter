@@ -10,6 +10,7 @@ describe MonospaceTextFormatter::Line do
     its(:fill)       { should == " "             }
     its(:truncated?) { should be_false           }
     its(:to_s)       { should == "This is text." }
+    its(:inspect)    { should == %Q{#<MonospaceTextFormatter::Line "This is text.">} }
   end
 
   describe "the text" do

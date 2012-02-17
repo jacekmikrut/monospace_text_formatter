@@ -62,6 +62,10 @@ module MonospaceTextFormatter
       aligned_visible_text
     end
 
+    def inspect
+      %Q(#<#{self.class} #{to_s.inspect}>)
+    end
+
     private
 
     def to_chunk_if_string(string)
