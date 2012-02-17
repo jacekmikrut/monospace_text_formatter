@@ -95,6 +95,10 @@ module MonospaceTextFormatter
       Chunk.new(string)
     end
 
+    def new_line(string, attrs={})
+      Line.new(string, attrs)
+    end
+
     def aligned_all_lines
       @aligned_all_lines ||= all_lines.each do |line|
         line.attributes(:align => align, :fill => fill, :width => width)
@@ -111,9 +115,9 @@ module MonospaceTextFormatter
                              when :top
                                []
                              when :middle
-                               Array.new(((@fixed_height - content_lines.size) / 2.0).floor, Line.new(""))
+                               Array.new(((@fixed_height - content_lines.size) / 2.0).floor, new_line(""))
                              when :bottom
-                               Array.new(@fixed_height - content_lines.size, Line.new(""))
+                               Array.new(@fixed_height - content_lines.size, new_line(""))
                              end
                            else
                              []
@@ -124,9 +128,9 @@ module MonospaceTextFormatter
       @empty_bottom_lines ||= if @fixed_height && fill && !fill.empty?
                                 case valign
                                 when :top
-                                  Array.new(@fixed_height - content_lines.size, Line.new(""))
+                                  Array.new(@fixed_height - content_lines.size, new_line(""))
                                 when :middle
-                                  Array.new(((@fixed_height - content_lines.size) / 2.0).ceil, Line.new(""))
+                                  Array.new(((@fixed_height - content_lines.size) / 2.0).ceil, new_line(""))
                                 when :bottom
                                   []
                                 end
@@ -138,7 +142,7 @@ module MonospaceTextFormatter
     def content_lines
       return @content_lines unless @content_lines.nil?
       return @content_lines = [] if @fixed_width == 0 && @fixed_height.nil?
-      return @content_lines = [Line.new("")] if @original_chunk.empty?
+      return @content_lines = [new_line("")] if @original_chunk.empty?
 
       @remaining_chunk = @original_chunk.duplicate
       @line_chunks = []
@@ -152,7 +156,7 @@ module MonospaceTextFormatter
       end
 
       common_width = @fixed_width || @line_chunks.map { |chunk| chunk.display_length }.max
-      @content_lines = @line_chunks.map { |chunk| Line.new(chunk, :width => common_width, :omission => omission) }
+      @content_lines = @line_chunks.map { |chunk| new_line(chunk, :width => common_width, :omission => omission) }
     end
   end
 end
