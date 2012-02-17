@@ -12,6 +12,7 @@ describe MonospaceTextFormatter::Box do
     its(:fill)       { should == " "    }
     its(:truncated?) { should be_false  }
     its(:to_s)       { should == "First line.               \nSecond, a bit longer line." }
+    its(:inspect)    { should == %Q{#<MonospaceTextFormatter::Box "First line.               \\nSecond, a bit longer line.">} }
   end
 
   describe "the text" do

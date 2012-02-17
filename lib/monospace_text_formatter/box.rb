@@ -85,6 +85,10 @@ module MonospaceTextFormatter
       @to_s ||= lines.join("\n")
     end
 
+    def inspect
+      %Q(#<#{self.class} #{to_s.inspect}>)
+    end
+
     private
 
     def to_chunk_if_string(string)
