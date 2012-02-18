@@ -1,2 +1,6 @@
+0.0.2 (February 18, 2012)
+  Implemented Line and Box #inspect methods.
+  Refactored Box class to make inheritance simpler.
+
 0.0.1 (February 16, 2012)
   Initial release.
