@@ -6,90 +6,90 @@ describe MonospaceTextFormatter::Chunk do
 
     context '.new()' do
       subject { described_class.new() }
-      its(:multiline?    ) { should be_false }
-      its(:blank?        ) { should be_true }
-      its(:empty?        ) { should be_true }
-      its(:display_length) { should == 0 }
+      its(:multiline?        ) { should be_false }
+      its(:blank?            ) { should be_true }
+      its(:empty?            ) { should be_true }
+      its(:display_length    ) { should == 0 }
       its(:non_display_length) { should == 0 }
-      its(:to_s          ) { should == "" }
-      its(:inspect       ) { should == %Q{#<MonospaceTextFormatter::Chunk "">} }
+      its(:to_s              ) { should == "" }
+      its(:inspect           ) { should == %Q{#<MonospaceTextFormatter::Chunk "">} }
     end
 
     context '.new("")' do
       subject { described_class.new("") }
-      its(:multiline?    ) { should be_false }
-      its(:blank?        ) { should be_true }
-      its(:empty?        ) { should be_true }
-      its(:display_length) { should == 0 }
+      its(:multiline?        ) { should be_false }
+      its(:blank?            ) { should be_true }
+      its(:empty?            ) { should be_true }
+      its(:display_length    ) { should == 0 }
       its(:non_display_length) { should == 0 }
-      its(:to_s          ) { should == "" }
-      its(:inspect       ) { should == %Q{#<MonospaceTextFormatter::Chunk "">} }
+      its(:to_s              ) { should == "" }
+      its(:inspect           ) { should == %Q{#<MonospaceTextFormatter::Chunk "">} }
     end
 
     context '.new("  ")' do
       subject { described_class.new("  ") }
-      its(:multiline?    ) { should be_false }
-      its(:blank?        ) { should be_true }
-      its(:empty?        ) { should be_false }
-      its(:display_length) { should == 2 }
+      its(:multiline?        ) { should be_false }
+      its(:blank?            ) { should be_true }
+      its(:empty?            ) { should be_false }
+      its(:display_length    ) { should == 2 }
       its(:non_display_length) { should == 0 }
-      its(:to_s          ) { should == "  " }
-      its(:inspect       ) { should == %Q{#<MonospaceTextFormatter::Chunk "  ">} }
+      its(:to_s              ) { should == "  " }
+      its(:inspect           ) { should == %Q{#<MonospaceTextFormatter::Chunk "  ">} }
     end
 
     context '.new("\n")' do
       subject { described_class.new("\n") }
-      its(:multiline?    ) { should be_true }
-      its(:blank?        ) { should be_true }
-      its(:empty?        ) { should be_false }
-      its(:display_length) { should == 1 }
+      its(:multiline?        ) { should be_true }
+      its(:blank?            ) { should be_true }
+      its(:empty?            ) { should be_false }
+      its(:display_length    ) { should == 1 }
       its(:non_display_length) { should == 0 }
-      its(:to_s          ) { should == "\n" }
-      its(:inspect       ) { should == %Q{#<MonospaceTextFormatter::Chunk "\\n">} }
+      its(:to_s              ) { should == "\n" }
+      its(:inspect           ) { should == %Q{#<MonospaceTextFormatter::Chunk "\\n">} }
     end
 
     context '.new("word")' do
       subject { described_class.new("word") }
-      its(:multiline?    ) { should be_false }
-      its(:blank?        ) { should be_false }
-      its(:empty?        ) { should be_false }
-      its(:display_length) { should == 4 }
+      its(:multiline?        ) { should be_false }
+      its(:blank?            ) { should be_false }
+      its(:empty?            ) { should be_false }
+      its(:display_length    ) { should == 4 }
       its(:non_display_length) { should == 0 }
-      its(:to_s          ) { should == "word" }
-      its(:inspect       ) { should == %Q{#<MonospaceTextFormatter::Chunk "word">} }
+      its(:to_s              ) { should == "word" }
+      its(:inspect           ) { should == %Q{#<MonospaceTextFormatter::Chunk "word">} }
     end
 
     context '.new("  word  ")' do
       subject { described_class.new("  word  ") }
-      its(:multiline?    ) { should be_false }
-      its(:blank?        ) { should be_false }
-      its(:empty?        ) { should be_false }
-      its(:display_length) { should == 8 }
+      its(:multiline?        ) { should be_false }
+      its(:blank?            ) { should be_false }
+      its(:empty?            ) { should be_false }
+      its(:display_length    ) { should == 8 }
       its(:non_display_length) { should == 0 }
-      its(:to_s          ) { should == "  word  " }
-      its(:inspect       ) { should == %Q{#<MonospaceTextFormatter::Chunk "  word  ">} }
+      its(:to_s              ) { should == "  word  " }
+      its(:inspect           ) { should == %Q{#<MonospaceTextFormatter::Chunk "  word  ">} }
     end
 
     context '.new("This is some text.")' do
       subject { described_class.new("This is some text.") }
-      its(:multiline?    ) { should be_false }
-      its(:blank?        ) { should be_false }
-      its(:empty?        ) { should be_false }
-      its(:display_length) { should == 18 }
+      its(:multiline?        ) { should be_false }
+      its(:blank?            ) { should be_false }
+      its(:empty?            ) { should be_false }
+      its(:display_length    ) { should == 18 }
       its(:non_display_length) { should == 0 }
-      its(:to_s          ) { should == "This is some text." }
-      its(:inspect       ) { should == %Q{#<MonospaceTextFormatter::Chunk "This is some text.">} }
+      its(:to_s              ) { should == "This is some text." }
+      its(:inspect           ) { should == %Q{#<MonospaceTextFormatter::Chunk "This is some text.">} }
     end
 
     context '.new("First line.\nSecond line.")' do
       subject { described_class.new("First line.\nSecond line.") }
-      its(:multiline?    ) { should be_true }
-      its(:blank?        ) { should be_false }
-      its(:empty?        ) { should be_false }
-      its(:display_length) { should == 24 }
+      its(:multiline?        ) { should be_true }
+      its(:blank?            ) { should be_false }
+      its(:empty?            ) { should be_false }
+      its(:display_length    ) { should == 24 }
       its(:non_display_length) { should == 0 }
-      its(:to_s          ) { should == "First line.\nSecond line." }
-      its(:inspect       ) { should == %Q{#<MonospaceTextFormatter::Chunk "First line.\\nSecond line.">} }
+      its(:to_s              ) { should == "First line.\nSecond line." }
+      its(:inspect           ) { should == %Q{#<MonospaceTextFormatter::Chunk "First line.\\nSecond line.">} }
     end
   end
 
