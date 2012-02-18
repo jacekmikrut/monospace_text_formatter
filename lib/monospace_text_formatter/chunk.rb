@@ -33,6 +33,11 @@ module MonospaceTextFormatter
       @display_length
     end
 
+    def non_display_length
+      slice_whole_remaining_string unless remaining_string.empty?
+      to_s.length - display_length
+    end
+
     def concat(string_or_chunk)
 
       if string_or_chunk.kind_of?(Chunk)
