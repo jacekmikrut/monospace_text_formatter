@@ -82,11 +82,11 @@ module MonospaceTextFormatter
                                 else
                                   case align
                                   when :left
-                                    visible_chunk.to_s.ljust(@fixed_width, fill)
+                                    visible_chunk.to_s.ljust( @fixed_width + visible_chunk.non_display_length, fill)
                                   when :center
-                                    visible_chunk.to_s.center(@fixed_width, fill)
+                                    visible_chunk.to_s.center(@fixed_width + visible_chunk.non_display_length, fill)
                                   when :right
-                                    visible_chunk.to_s.rjust(@fixed_width, fill)
+                                    visible_chunk.to_s.rjust( @fixed_width + visible_chunk.non_display_length, fill)
                                   end
                                 end
     end
