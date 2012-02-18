@@ -117,9 +117,9 @@ module MonospaceTextFormatter
     end
 
     def pop_atomic_chunk
-      chunk = atomic_chunks.pop
-      @display_length -= chunk.display_length
-      chunk
+      atomic_chunk = atomic_chunks.pop
+      @display_length -= atomic_chunk.display_length
+      atomic_chunk
     end
 
     def unshift_atomic_chunk(atomic_chunk)
@@ -128,15 +128,15 @@ module MonospaceTextFormatter
     end
 
     def shift_atomic_chunk
-      chunk = atomic_chunks.shift
-      @display_length -= chunk.display_length
-      chunk
+      atomic_chunk = atomic_chunks.shift
+      @display_length -= atomic_chunk.display_length
+      atomic_chunk
     end
 
     def delete_atomic_chunk_at(index)
-      chunk = atomic_chunks.delete_at(index)
-      @display_length -= chunk.display_length
-      chunk
+      atomic_chunk = atomic_chunks.delete_at(index)
+      @display_length -= atomic_chunk.display_length
+      atomic_chunk
     end
 
     def retrieve_first_atomic_chunk

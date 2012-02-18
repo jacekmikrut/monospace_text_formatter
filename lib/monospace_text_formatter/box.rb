@@ -99,8 +99,8 @@ module MonospaceTextFormatter
       Chunk.new(string)
     end
 
-    def new_line(string, attrs={})
-      Line.new(string, attrs)
+    def new_line(string_or_chunk, attrs={})
+      Line.new(string_or_chunk, attrs)
     end
 
     def aligned_all_lines
