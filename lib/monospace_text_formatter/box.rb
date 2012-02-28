@@ -159,8 +159,9 @@ module MonospaceTextFormatter
                         end
       end
 
-      common_width = @fixed_width || @line_chunks.map { |chunk| chunk.display_length }.max
-      @content_lines = @line_chunks.map { |chunk| new_line(chunk, :width => common_width, :omission => omission) }
+      @content_lines = @line_chunks.map { |chunk| new_line(chunk, :omission => omission) }
+      common_width = @fixed_width || @content_lines.map { |line| line.width }.max
+      @content_lines.each { |line| line.width = common_width }
     end
   end
 end

@@ -159,6 +159,35 @@ describe MonospaceTextFormatter::Box do
                                "longer line.     "]
     end
 
+    context "for multiline string and without width" do
+
+      subject { MonospaceTextFormatter::Box.new("First line.\nSecond line.") }
+
+      it "should update the height" do
+
+        subject.lines.should == ["First line. ",
+                                 "Second line."]
+
+        subject.height = 2
+        subject.lines.should == ["First line. ",
+                                 "Second line."]
+
+        subject.height = 1
+        subject.lines.should == ["First line. ..."]
+
+        subject.height = 0
+        subject.lines.should == []
+
+        subject.height = 2
+        subject.lines.should == ["First line. ",
+                                 "Second line."]
+
+        subject.height = nil
+        subject.lines.should == ["First line. ",
+                                 "Second line."]
+      end
+    end
+
     context "when setting height = -1" do
       it { lambda { subject.height = -1 }.should raise_error(ArgumentError, "The :height must be equal or greater than 0, but is -1") }
     end
