@@ -283,7 +283,15 @@ describe MonospaceTextFormatter::Line do
       it "should update the fill" do
 
         subject.fill = "123"
+
+        subject.align = :left
         subject.to_s.should == "12This is some text.12312312"
+
+        subject.align = :center
+        subject.to_s.should == "12312This is some text.12312"
+
+        subject.align = :right
+        subject.to_s.should == "123123123This is some text.1"
 
         subject.fill = ""
         subject.to_s.should == "This is some text."
