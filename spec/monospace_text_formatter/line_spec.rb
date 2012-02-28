@@ -5,6 +5,8 @@ describe MonospaceTextFormatter::Line do
   describe 'MonospaceTextFormatter::Line.new("This is text.")' do
     subject { described_class.new("This is text.") }
     its(:width)      { should == 13              }
+    its(:padding_right) { should == 0            }
+    its(:padding_left ) { should == 0            }
     its(:omission)   { should == " ..."          }
     its(:align)      { should == :left           }
     its(:fill)       { should == " "             }
@@ -84,6 +86,104 @@ describe MonospaceTextFormatter::Line do
     end
   end
 
+  describe "#padding_right=" do
+
+    subject { MonospaceTextFormatter::Line.new("This is some text.") }
+
+    it "should update the right padding" do
+
+      subject.padding_right = 2
+      subject.padding_right.should == 2
+      subject.width.should == 20
+      subject.to_s.should == "This is some text.  "
+
+      subject.padding_right = 4
+      subject.padding_right.should == 4
+      subject.width.should == 22
+      subject.to_s.should == "This is some text.    "
+    end
+
+    context "with fixed width" do
+
+      subject { MonospaceTextFormatter::Line.new("This is some text.", :padding_right => 4) }
+
+      it "should properly render the text" do
+
+        subject.width = 20
+        subject.to_s.should == "This is some ...    "
+
+        subject.width = 12
+        subject.to_s.should == "This ...    "
+
+        subject.width = 3
+        subject.to_s.should == "   "
+
+        subject.width = 0
+        subject.to_s.should == ""
+
+        subject.width = nil
+        subject.to_s.should == "This is some text.    "
+      end
+    end
+
+    describe "#padding_right = -1" do
+      it { lambda { subject.padding_right = -1 }.should raise_error(ArgumentError, "The :padding_right must be a number equal or greater than 0, but is -1") }
+    end
+
+    describe "#padding_right = nil" do
+      it { lambda { subject.padding_right = nil }.should raise_error(ArgumentError, "The :padding_right must be a number equal or greater than 0, but is nil") }
+    end
+  end
+
+  describe "#padding_left=" do
+
+    subject { MonospaceTextFormatter::Line.new("This is some text.") }
+
+    it "should update the left padding" do
+
+      subject.padding_left = 2
+      subject.padding_left.should == 2
+      subject.width.should == 20
+      subject.to_s.should == "  This is some text."
+
+      subject.padding_left = 4
+      subject.padding_left.should == 4
+      subject.width.should == 22
+      subject.to_s.should == "    This is some text."
+    end
+
+    context "with fixed width" do
+
+      subject { MonospaceTextFormatter::Line.new("This is some text.", :padding_left => 4) }
+
+      it "should properly render the text" do
+
+        subject.width = 20
+        subject.to_s.should == "    This is some ..."
+
+        subject.width = 12
+        subject.to_s.should == "    This ..."
+
+        subject.width = 3
+        subject.to_s.should == "   "
+
+        subject.width = 0
+        subject.to_s.should == ""
+
+        subject.width = nil
+        subject.to_s.should == "    This is some text."
+      end
+    end
+
+    describe "#padding_left = -1" do
+      it { lambda { subject.padding_left = -1 }.should raise_error(ArgumentError, "The :padding_left must be a number equal or greater than 0, but is -1") }
+    end
+
+    describe "#padding_left = nil" do
+      it { lambda { subject.padding_left = nil }.should raise_error(ArgumentError, "The :padding_left must be a number equal or greater than 0, but is nil") }
+    end
+  end
+
   describe "#omission=" do
 
     subject { MonospaceTextFormatter::Line.new("This is some text.") }
@@ -131,6 +231,24 @@ describe MonospaceTextFormatter::Line do
       subject.to_s.should == "This is some text.   "
     end
 
+    context "with padding" do
+      subject { MonospaceTextFormatter::Line.new("This is some text.", :width => 25, :padding_right => 3, :padding_left => 1) }
+
+      it "should update the alignment" do
+
+        subject.to_s.should == " This is some text.      "
+
+        subject.align = :center
+        subject.to_s.should == "  This is some text.     "
+
+        subject.align = "right"
+        subject.to_s.should == "    This is some text.   "
+
+        subject.align = :left
+        subject.to_s.should == " This is some text.      "
+      end
+    end
+
     describe "#align= :middle" do
       it { lambda { subject.align = :middle }.should raise_error(ArgumentError, "The :align must be a Symbol or String with value 'left', 'center' or 'right', but is :middle") }
     end
@@ -156,6 +274,23 @@ describe MonospaceTextFormatter::Line do
 
       subject.fill = nil
       subject.to_s.should == "This is some text."
+    end
+
+    context "with padding" do
+
+      subject { MonospaceTextFormatter::Line.new("This is some text.", :width => 28, :padding_right => 1, :padding_left => 2) }
+
+      it "should update the fill" do
+
+        subject.fill = "123"
+        subject.to_s.should == "12This is some text.12312312"
+
+        subject.fill = ""
+        subject.to_s.should == "This is some text."
+
+        subject.fill = nil
+        subject.to_s.should == "This is some text."
+      end
     end
   end
 
