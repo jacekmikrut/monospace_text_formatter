@@ -113,6 +113,7 @@ module MonospaceTextFormatter
 
     def left_fill_length(display_length)
       return 0 if fill.nil? or fill.empty?
+      return @fixed_width || 0 if display_length == 0
 
       [padding_left +
         if @fixed_width
@@ -131,6 +132,7 @@ module MonospaceTextFormatter
 
     def right_fill_length(display_length)
       return 0 if fill.nil? or fill.empty?
+      return 0 if display_length == 0
 
       [padding_right +
         if @fixed_width

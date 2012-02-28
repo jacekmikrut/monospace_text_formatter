@@ -300,6 +300,56 @@ describe MonospaceTextFormatter::Line do
         subject.to_s.should == "This is some text."
       end
     end
+
+    context "for empty content with width" do
+
+      subject { MonospaceTextFormatter::Line.new("", :width => 10) }
+
+      it "should update the fill" do
+
+        subject.fill = "123"
+
+        subject.align = :left
+        subject.to_s.should == "1231231231"
+
+        subject.align = :center
+        subject.to_s.should == "1231231231"
+
+        subject.align = :right
+        subject.to_s.should == "1231231231"
+
+        subject.fill = ""
+        subject.to_s.should == ""
+
+        subject.fill = nil
+        subject.to_s.should == ""
+      end
+    end
+
+    context "for empty content and with width and padding" do
+
+      subject { MonospaceTextFormatter::Line.new("", :width => 10, :padding_left => 2, :padding_right => 2) }
+
+      it "should update the fill" do
+
+        subject.fill = "123"
+
+        subject.align = :left
+        subject.to_s.should == "1231231231"
+
+        subject.align = :center
+        subject.to_s.should == "1231231231"
+
+        subject.align = :right
+        subject.to_s.should == "1231231231"
+
+        subject.fill = ""
+        subject.to_s.should == ""
+
+        subject.fill = nil
+        subject.to_s.should == ""
+      end
+    end
   end
 
   describe "#truncated?" do
