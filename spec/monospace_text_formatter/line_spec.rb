@@ -4,15 +4,15 @@ describe MonospaceTextFormatter::Line do
 
   describe 'MonospaceTextFormatter::Line.new("This is text.")' do
     subject { described_class.new("This is text.") }
-    its(:width)      { should == 13              }
-    its(:padding_right) { should == 0            }
-    its(:padding_left ) { should == 0            }
-    its(:omission)   { should == " ..."          }
-    its(:align)      { should == :left           }
-    its(:fill)       { should == " "             }
-    its(:truncated?) { should be_false           }
-    its(:to_s)       { should == "This is text." }
-    its(:inspect)    { should == %Q{#<MonospaceTextFormatter::Line "This is text.">} }
+    its(:width        ) { should == 13              }
+    its(:padding_right) { should == 0               }
+    its(:padding_left ) { should == 0               }
+    its(:omission     ) { should == " ..."          }
+    its(:align        ) { should == :left           }
+    its(:fill         ) { should == " "             }
+    its(:truncated?   ) { should be_false           }
+    its(:to_s         ) { should == "This is text." }
+    its(:inspect      ) { should == %Q{#<MonospaceTextFormatter::Line "This is text.">} }
   end
 
   describe "the text" do

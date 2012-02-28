@@ -4,10 +4,10 @@ module MonospaceTextFormatter
     def initialize(string_or_chunk, attrs={})
       @padding_left  = 0
       @padding_right = 0
-         @omission = string_to_chunk(" ...")
-            @align = :left
-             @fill = " "
-        @truncated = nil
+           @omission = string_to_chunk(" ...")
+              @align = :left
+               @fill = " "
+          @truncated = nil
 
       raise ArgumentError, "No string given" unless string_or_chunk
       @original_chunk = to_chunk_if_string(string_or_chunk)
