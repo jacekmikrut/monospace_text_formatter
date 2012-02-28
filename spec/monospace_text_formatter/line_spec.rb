@@ -188,7 +188,7 @@ describe MonospaceTextFormatter::Line do
 
     subject { MonospaceTextFormatter::Line.new("This is some text.") }
 
-    it "should update the width" do
+    it "should update the omission" do
 
       subject.width = 15
       subject.to_s.should == "This is ...    "
@@ -217,7 +217,7 @@ describe MonospaceTextFormatter::Line do
 
     subject { MonospaceTextFormatter::Line.new("This is some text.", :width => 21) }
 
-    it "should update the width" do
+    it "should update the alignment" do
 
       subject.to_s.should == "This is some text.   "
 
@@ -258,7 +258,7 @@ describe MonospaceTextFormatter::Line do
 
     subject { MonospaceTextFormatter::Line.new("This is some text.", :width => 25) }
 
-    it "should update the width" do
+    it "should update the fill" do
 
       subject.fill = "123"
       subject.to_s.should == "This is some text.1231231"
