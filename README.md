@@ -37,6 +37,16 @@ The `line` object for the following examples:
    => "This is some ..."
 ```
 
+* `padding_left` and `padding_right` (in number of characters)
+
+```ruby
+  line.padding_left = 3
+  line.padding_right = 2
+
+  line.to_s
+   => "   This is ...  "
+```
+
 * `omission`
 
 ```ruby
@@ -103,6 +113,24 @@ The `box` object for the following examples:
   box.lines
    => ["First line.         ",
        "And second, a ...   "]
+```
+
+* `padding_top`, `padding_right`, `padding_bottom` and `padding_left` (in number of lines/characters)
+
+```ruby
+  box.height = 5
+
+  box.padding_top = 1
+  box.padding_right = 1
+  box.padding_bottom = 2
+  box.padding_left = 2
+
+  box.lines
+   => ["                    ",
+       "  First line.       ",
+       "  And second, a ... ",
+       "                    ",
+       "                    "]
 ```
 
 * `omission`
