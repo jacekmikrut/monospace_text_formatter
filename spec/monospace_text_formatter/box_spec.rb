@@ -4,19 +4,19 @@ describe MonospaceTextFormatter::Box do
 
   describe 'MonospaceTextFormatter::Box.new("First line.\nSecond, a bit longer line.")' do
     subject { described_class.new("First line.\nSecond, a bit longer line.") }
-    its(:width)      { should == 26     }
-    its(:height)     { should ==  2     }
-    its(:padding_top   ){ should ==  0  }
-    its(:padding_right ){ should ==  0  }
-    its(:padding_bottom){ should ==  0  }
-    its(:padding_left  ){ should ==  0  }
-    its(:omission)   { should == " ..." }
-    its(:align)      { should == :left  }
-    its(:valign)     { should == :top   }
-    its(:fill)       { should == " "    }
-    its(:truncated?) { should be_false  }
-    its(:to_s)       { should == "First line.               \nSecond, a bit longer line." }
-    its(:inspect)    { should == %Q{#<MonospaceTextFormatter::Box "First line.               \\nSecond, a bit longer line.">} }
+    its(:width         ) { should == 26     }
+    its(:height        ) { should ==  2     }
+    its(:padding_top   ) { should ==  0     }
+    its(:padding_right ) { should ==  0     }
+    its(:padding_bottom) { should ==  0     }
+    its(:padding_left  ) { should ==  0     }
+    its(:omission      ) { should == " ..." }
+    its(:align         ) { should == :left  }
+    its(:valign        ) { should == :top   }
+    its(:fill          ) { should == " "    }
+    its(:truncated?    ) { should be_false  }
+    its(:to_s          ) { should == "First line.               \nSecond, a bit longer line." }
+    its(:inspect       ) { should == %Q{#<MonospaceTextFormatter::Box "First line.               \\nSecond, a bit longer line.">} }
   end
 
   describe "the text" do
