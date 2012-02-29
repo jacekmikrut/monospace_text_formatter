@@ -1,3 +1,7 @@
+0.1.0 (February 29, 2012)
+  Implemented "padding" setting.
+  Fixed "width" calculation for Box class.
+
 0.0.3 (February 18, 2012)
   Fixed handling of non display length for horizontal alignment.
   Minor refactorings.
