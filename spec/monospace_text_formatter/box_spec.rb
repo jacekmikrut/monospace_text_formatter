@@ -6,6 +6,10 @@ describe MonospaceTextFormatter::Box do
     subject { described_class.new("First line.\nSecond, a bit longer line.") }
     its(:width)      { should == 26     }
     its(:height)     { should ==  2     }
+    its(:padding_top   ){ should ==  0  }
+    its(:padding_right ){ should ==  0  }
+    its(:padding_bottom){ should ==  0  }
+    its(:padding_left  ){ should ==  0  }
     its(:omission)   { should == " ..." }
     its(:align)      { should == :left  }
     its(:valign)     { should == :top   }
@@ -193,6 +197,270 @@ describe MonospaceTextFormatter::Box do
     end
   end
 
+  describe "#padding_top=" do
+
+    subject { MonospaceTextFormatter::Box.new("First line.\nSecond line.") }
+
+    it "should update the top padding" do
+
+      subject.padding_top = 2
+      subject.padding_top.should == 2
+      subject.height.should == 4
+      subject.lines.should == ["            ",
+                               "            ",
+                               "First line. ",
+                               "Second line."]
+
+      subject.padding_top = 4
+      subject.padding_top.should == 4
+      subject.height.should == 6
+      subject.lines.should == ["            ",
+                               "            ",
+                               "            ",
+                               "            ",
+                               "First line. ",
+                               "Second line."]
+    end
+
+    context "with fixed height" do
+
+      subject { MonospaceTextFormatter::Box.new("First line.\nSecond line.", :padding_top => 2) }
+
+      it "should properly render the text" do
+
+        subject.height = 4
+        subject.lines.should == ["            ",
+                                 "            ",
+                                 "First line. ",
+                                 "Second line."]
+
+        subject.height = 3
+        subject.lines.should == ["               ",
+                                 "               ",
+                                 "First line. ..."]
+
+        subject.height = 2
+        subject.lines.should == ["",
+                                 ""]
+
+        subject.height = 0
+        subject.lines.should == []
+      end
+    end
+
+    describe "#padding_top = -1" do
+      it { lambda { subject.padding_top = -1 }.should raise_error(ArgumentError, "The :padding_top must be a number equal or greater than 0, but is -1") }
+    end
+
+    describe "#padding_top = nil" do
+      it { lambda { subject.padding_top = nil }.should raise_error(ArgumentError, "The :padding_top must be a number equal or greater than 0, but is nil") }
+    end
+  end
+
+  describe "#padding_right=" do
+
+    subject { MonospaceTextFormatter::Box.new("First line.\nSecond line.") }
+
+    it "should update the right padding" do
+
+      subject.padding_right = 2
+      subject.padding_right.should == 2
+      subject.width.should == 14
+      subject.lines.should == ["First line.   ",
+                               "Second line.  "]
+
+      subject.padding_right = 4
+      subject.padding_right.should == 4
+      subject.width.should == 16
+      subject.lines.should == ["First line.     ",
+                               "Second line.    "]
+    end
+
+    context "with fixed width" do
+
+      subject { MonospaceTextFormatter::Box.new("First line.\nSecond line.", :padding_right => 2) }
+
+      it "should properly render the text" do
+
+        subject.width = 14
+        subject.lines.should == ["First line.   ",
+                                 "Second line.  "]
+
+        subject.width = 12
+        subject.lines.should == ["First       ",
+                                 "line.       ",
+                                 "Second      ",
+                                 "line.       "]
+
+        subject.width = 8
+        subject.lines.should == ["First   ",
+                                 "line.   ",
+                                 "Second  ",
+                                 "line.   "]
+
+        subject.width = 4
+        subject.lines.should == ["Fi  ",
+                                 "rs  ",
+                                 "t   ",
+                                 "li  ",
+                                 "ne  ",
+                                 ".   ",
+                                 "Se  ",
+                                 "co  ",
+                                 "nd  ",
+                                 "li  ",
+                                 "ne  ",
+                                 ".   "]
+
+        subject.width = 2
+        subject.lines.should == []
+
+        subject.width = 0
+        subject.lines.should == []
+      end
+    end
+
+    describe "#padding_right = -1" do
+      it { lambda { subject.padding_right = -1 }.should raise_error(ArgumentError, "The :padding_right must be a number equal or greater than 0, but is -1") }
+    end
+
+    describe "#padding_right = nil" do
+      it { lambda { subject.padding_right = nil }.should raise_error(ArgumentError, "The :padding_right must be a number equal or greater than 0, but is nil") }
+    end
+  end
+
+  describe "#padding_bottom=" do
+
+    subject { MonospaceTextFormatter::Box.new("First line.\nSecond line.") }
+
+    it "should update the bottom padding" do
+
+      subject.padding_bottom = 2
+      subject.padding_bottom.should == 2
+      subject.height.should == 4
+      subject.lines.should == ["First line. ",
+                               "Second line.",
+                               "            ",
+                               "            "]
+
+      subject.padding_bottom = 4
+      subject.padding_bottom.should == 4
+      subject.height.should == 6
+      subject.lines.should == ["First line. ",
+                               "Second line.",
+                               "            ",
+                               "            ",
+                               "            ",
+                               "            "]
+    end
+
+    context "with fixed height" do
+
+      subject { MonospaceTextFormatter::Box.new("First line.\nSecond line.", :padding_bottom => 2) }
+
+      it "should properly render the text" do
+
+        subject.height = 4
+        subject.lines.should == ["First line. ",
+                                 "Second line.",
+                                 "            ",
+                                 "            "]
+
+        subject.height = 3
+        subject.lines.should == ["First line. ...",
+                                 "               ",
+                                 "               "]
+
+        subject.height = 2
+        subject.lines.should == ["",
+                                 ""]
+
+        subject.height = 0
+        subject.lines.should == []
+      end
+    end
+
+    describe "#padding_bottom = -1" do
+      it { lambda { subject.padding_bottom = -1 }.should raise_error(ArgumentError, "The :padding_bottom must be a number equal or greater than 0, but is -1") }
+    end
+
+    describe "#padding_bottom = nil" do
+      it { lambda { subject.padding_bottom = nil }.should raise_error(ArgumentError, "The :padding_bottom must be a number equal or greater than 0, but is nil") }
+    end
+  end
+
+  describe "#padding_left=" do
+
+    subject { MonospaceTextFormatter::Box.new("First line.\nSecond line.") }
+
+    it "should update the left padding" do
+
+      subject.padding_left = 2
+      subject.padding_left.should == 2
+      subject.width.should == 14
+      subject.lines.should == ["  First line. ",
+                               "  Second line."]
+
+      subject.padding_left = 4
+      subject.padding_left.should == 4
+      subject.width.should == 16
+      subject.lines.should == ["    First line. ",
+                               "    Second line."]
+    end
+
+    context "with fixed width" do
+
+      subject { MonospaceTextFormatter::Box.new("First line.\nSecond line.", :padding_left => 2) }
+
+      it "should properly render the text" do
+
+        subject.width = 14
+        subject.lines.should == ["  First line. ",
+                                 "  Second line."]
+
+        subject.width = 12
+        subject.lines.should == ["  First     ",
+                                 "  line.     ",
+                                 "  Second    ",
+                                 "  line.     "]
+
+        subject.width = 8
+        subject.lines.should == ["  First ",
+                                 "  line. ",
+                                 "  Second",
+                                 "  line. "]
+
+        subject.width = 4
+        subject.lines.should == ["  Fi",
+                                 "  rs",
+                                 "  t ",
+                                 "  li",
+                                 "  ne",
+                                 "  . ",
+                                 "  Se",
+                                 "  co",
+                                 "  nd",
+                                 "  li",
+                                 "  ne",
+                                 "  . "]
+
+        subject.width = 2
+        subject.lines.should == []
+
+        subject.width = 0
+        subject.lines.should == []
+      end
+    end
+
+    describe "#padding_left = -1" do
+      it { lambda { subject.padding_left = -1 }.should raise_error(ArgumentError, "The :padding_left must be a number equal or greater than 0, but is -1") }
+    end
+
+    describe "#padding_left = nil" do
+      it { lambda { subject.padding_left = nil }.should raise_error(ArgumentError, "The :padding_left must be a number equal or greater than 0, but is nil") }
+    end
+  end
+
   describe "#omission=" do
 
     subject { MonospaceTextFormatter::Box.new("First line.\nAnd second, a bit longer line.", :width => 17, :height => 2) }
@@ -238,6 +506,33 @@ describe MonospaceTextFormatter::Box do
                                "longer line.      "]
     end
 
+    context "with padding" do
+
+      subject { MonospaceTextFormatter::Box.new("First line.\nAnd second, a bit longer line.", :width => 21, :padding_left => 2, :padding_right => 1) }
+
+      it "should update the horizontal alignment" do
+
+        subject.lines.should == ["  First line.        ",
+                                 "  And second, a bit  ",
+                                 "  longer line.       "]
+
+        subject.align = :center
+        subject.lines.should == ["     First line.     ",
+                                 "  And second, a bit  ",
+                                 "     longer line.    "]
+
+        subject.align = 'right'
+        subject.lines.should == ["         First line. ",
+                                 "   And second, a bit ",
+                                 "        longer line. "]
+
+        subject.align = :left
+        subject.lines.should == ["  First line.        ",
+                                 "  And second, a bit  ",
+                                 "  longer line.       "]
+      end
+    end
+
     describe "when setting align = 'middle'" do
       it { lambda { subject.align = 'middle' }.should raise_error(ArgumentError, "The :align must be a Symbol or String with value 'left', 'center' or 'right', but is \"middle\"") }
     end
@@ -279,6 +574,57 @@ describe MonospaceTextFormatter::Box do
                                "                 ",
                                "                 ",
                                "                 "]
+    end
+
+    context "with padding" do
+
+      subject { MonospaceTextFormatter::Box.new("First line.\nAnd second, a bit longer line.", :width => 17, :height => 9, :padding_top => 1, :padding_bottom => 2) }
+
+      it "should update the vertical alignment" do
+
+        subject.lines.should == ["                 ",
+                                 "First line.      ",
+                                 "And second, a bit",
+                                 "longer line.     ",
+                                 "                 ",
+                                 "                 ",
+                                 "                 ",
+                                 "                 ",
+                                 "                 "]
+
+        subject.valign = :middle
+        subject.lines.should == ["                 ",
+                                 "                 ",
+                                 "First line.      ",
+                                 "And second, a bit",
+                                 "longer line.     ",
+                                 "                 ",
+                                 "                 ",
+                                 "                 ",
+                                 "                 "]
+
+        subject.valign = :bottom
+        subject.lines.should == ["                 ",
+                                 "                 ",
+                                 "                 ",
+                                 "                 ",
+                                 "First line.      ",
+                                 "And second, a bit",
+                                 "longer line.     ",
+                                 "                 ",
+                                 "                 "]
+
+        subject.valign = 'top'
+        subject.lines.should == ["                 ",
+                                 "First line.      ",
+                                 "And second, a bit",
+                                 "longer line.     ",
+                                 "                 ",
+                                 "                 ",
+                                 "                 ",
+                                 "                 ",
+                                 "                 "]
+      end
     end
 
     describe "when setting valign = 'center'" do
@@ -327,6 +673,60 @@ describe MonospaceTextFormatter::Box do
       subject.lines.should == ["First line.",
                                "And second, a bit",
                                "longer line."]
+    end
+
+    context "with padding" do
+
+      subject { MonospaceTextFormatter::Box.new("First line.\nAnd second, a bit longer line.", :width => 21, :height => 9,
+                                               :padding_top => 1, :padding_right => 2, :padding_bottom => 2, :padding_left => 1) }
+
+      it "should update the fill" do
+
+        subject.fill = "123"
+        subject.lines.should == ["123123123123123123123",
+                                 "1First line.123123123",
+                                 "1And second, a bit123",
+                                 "1longer line.12312312",
+                                 "123123123123123123123",
+                                 "123123123123123123123",
+                                 "123123123123123123123",
+                                 "123123123123123123123",
+                                 "123123123123123123123"]
+
+        subject.align = :center
+        subject.valign = :middle
+        subject.lines.should == ["123123123123123123123",
+                                 "123123123123123123123",
+                                 "1231First line.123123",
+                                 "1And second, a bit123",
+                                 "1231longer line.12312",
+                                 "123123123123123123123",
+                                 "123123123123123123123",
+                                 "123123123123123123123",
+                                 "123123123123123123123"]
+
+        subject.align = :right
+        subject.valign = :bottom
+        subject.lines.should == ["123123123123123123123",
+                                 "123123123123123123123",
+                                 "123123123123123123123",
+                                 "123123123123123123123",
+                                 "12312312First line.12",
+                                 "12And second, a bit12",
+                                 "1231231longer line.12",
+                                 "123123123123123123123",
+                                 "123123123123123123123"]
+
+        subject.fill = ""
+        subject.lines.should == ["First line.",
+                                 "And second, a bit",
+                                 "longer line."]
+
+        subject.fill = nil
+        subject.lines.should == ["First line.",
+                                 "And second, a bit",
+                                 "longer line."]
+      end
     end
   end
 
